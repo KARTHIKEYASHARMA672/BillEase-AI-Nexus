@@ -8,7 +8,10 @@ export const BillProvider = ({ children }) => {
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showCalendarModal, setShowCalendarModal] = useState(false);
   const [showNotificationsModal, setShowNotificationsModal] = useState(false);
-
+  
+  // Auth State
+  const [user, setUser] = useState(null); // null means not logged in
+  
   // AI Nexus State - Persistent across tab switches
   const [sessions, setSessions] = useState([
     { id: '1', title: 'Financial Planning', messages: [
@@ -66,7 +69,12 @@ export const BillProvider = ({ children }) => {
       sessions,
       setSessions,
       activeSessionId,
-      setActiveSessionId
+      setActiveSessionId,
+      user,
+      setUser,
+      login: (userData) => setUser(userData),
+      signup: (userData) => setUser(userData),
+      logout: () => setUser(null)
     }}>
       {children}
     </BillContext.Provider>

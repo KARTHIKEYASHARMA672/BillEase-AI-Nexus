@@ -3,7 +3,7 @@ import { Home, Receipt, PieChart, MessageSquare, Bell, Settings, Plus, History }
 import { useBills } from '../context/BillContext';
 
 const Sidebar = ({ activeTab, setActiveTab }) => {
-  const { setShowSettingsModal, sessions, setActiveSessionId } = useBills();
+  const { setShowSettingsModal, sessions, setActiveSessionId, user } = useBills();
   
   const handleHistoryClick = (id) => {
     setActiveTab('nexus');
@@ -129,11 +129,11 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
           alignItems: 'center',
           justifyContent: 'center'
         }}>
-          <span style={{ fontSize: '14px', fontWeight: '700' }}>JD</span>
+          <span style={{ fontSize: '14px', fontWeight: '700' }}>{user?.avatar || 'JD'}</span>
         </div>
         <div>
-          <p style={{ fontSize: '14px', fontWeight: '600' }}>John Doe</p>
-          <p style={{ fontSize: '12px', color: 'var(--text-dim)' }}>Premium Plan</p>
+          <p style={{ fontSize: '14px', fontWeight: '600' }}>{user?.name || 'John Doe'}</p>
+          <p style={{ fontSize: '12px', color: 'var(--text-dim)' }}>{user?.plan || 'Premium Plan'}</p>
         </div>
         <Settings 
           size={18} 

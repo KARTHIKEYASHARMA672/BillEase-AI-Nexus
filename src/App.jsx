@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import BillManager from './components/BillManager';
 import AINexus from './components/AINexus';
+import Auth from './components/Auth';
 import { Bell, Search, Settings, HelpCircle, X, Check, Calendar as CalendarIcon, User, Shield, CreditCard, Bell as BellIcon, Trash2, Camera, LogOut, Save, Smartphone, Mail, Lock } from 'lucide-react';
 
 const Header = () => {
@@ -127,6 +128,7 @@ const Modal = ({ isOpen, onClose, title, children, width = '500px' }) => {
 };
 
 const SettingsView = ({ onClose }) => {
+  const { logout } = useBills();
   const [activeSubTab, setActiveSubTab] = useState('profile');
   const [isSaving, setIsSaving] = useState(false);
   const [formData, setFormData] = useState({ name: 'John Doe', email: 'john@example.com' });
@@ -173,7 +175,10 @@ const SettingsView = ({ onClose }) => {
             {t.label}
           </button>
         ))}
-        <button style={{ marginTop: 'auto', padding: '12px 16px', borderRadius: '10px', border: 'none', background: 'transparent', color: '#f43f5e', display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontSize: '14px', fontWeight: '600' }}>
+        <button 
+          onClick={logout}
+          style={{ marginTop: 'auto', padding: '12px 16px', borderRadius: '10px', border: 'none', background: 'transparent', color: '#f43f5e', display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontSize: '14px', fontWeight: '600' }}
+        >
           <LogOut size={16} />
           Sign Out
         </button>
@@ -391,8 +396,11 @@ const AppContent = () => {
     showSettingsModal, setShowSettingsModal, 
     showHelpModal, setShowHelpModal,
     showCalendarModal, setShowCalendarModal,
-    showNotificationsModal, setShowNotificationsModal
+    showNotificationsModal, setShowNotificationsModal,
+    user
   } = useBills();
+
+  if (!user) return <Auth />;
 
   const renderContent = () => {
     switch (activeTab) {
