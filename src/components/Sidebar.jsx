@@ -3,7 +3,12 @@ import { Home, Receipt, PieChart, MessageSquare, Bell, Settings, Plus, History }
 import { useBills } from '../context/BillContext';
 
 const Sidebar = ({ activeTab, setActiveTab }) => {
-  const { setShowSettingsModal } = useBills();
+  const { setShowSettingsModal, sessions, setActiveSessionId } = useBills();
+  
+  const handleHistoryClick = (id) => {
+    setActiveTab('nexus');
+    setActiveSessionId(id);
+  };
   
   const menuItems = [
     { id: 'dashboard', icon: Home, label: 'Dashboard' },
@@ -83,40 +88,26 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
             History
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <div 
-              onClick={() => setActiveTab('nexus')}
-              className="history-item" 
-              style={{ 
-                padding: '10px 16px', 
-                borderRadius: '12px', 
-                fontSize: '13px', 
-                color: 'var(--text-muted)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                cursor: 'pointer'
-              }}
-            >
-              <History size={14} />
-              <span>Electricity Breakdown</span>
-            </div>
-            <div 
-              onClick={() => setActiveTab('nexus')}
-              className="history-item" 
-              style={{ 
-                padding: '10px 16px', 
-                borderRadius: '12px', 
-                fontSize: '13px', 
-                color: 'var(--text-muted)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                cursor: 'pointer'
-              }}
-            >
-              <History size={14} />
-              <span>April Spending Summary</span>
-            </div>
+            {sessions.slice(0, 3).map(session => (
+              <div 
+                key={session.id}
+                onClick={() => handleHistoryClick(session.id)}
+                className="history-item" 
+                style={{ 
+                  padding: '10px 16px', 
+                  borderRadius: '12px', 
+                  fontSize: '13px', 
+                  color: 'var(--text-muted)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  cursor: 'pointer'
+                }}
+              >
+                <History size={14} />
+                <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{session.title}</span>
+              </div>
+            ))}
           </div>
         </div>
       </nav>

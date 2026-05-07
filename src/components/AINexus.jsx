@@ -7,13 +7,7 @@ const GEMINI_API_KEY = "AIzaSyAUHLG9D2mAki7PU_0iHtq0y4GfgjYZaZg";
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
 const AINexus = () => {
-  const { bills } = useBills();
-  const [sessions, setSessions] = useState([
-    { id: '1', title: 'Financial Planning', messages: [
-      { role: 'assistant', content: "Hello! I'm your Nexus AI. I have access to your bill data. Ask me anything about your spending, upcoming dues, or total monthly costs!" }
-    ]}
-  ]);
-  const [activeSessionId, setActiveSessionId] = useState('1');
+  const { bills, sessions, setSessions, activeSessionId, setActiveSessionId } = useBills();
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [error, setError] = useState(null);

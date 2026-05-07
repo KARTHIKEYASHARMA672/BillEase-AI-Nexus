@@ -9,6 +9,14 @@ export const BillProvider = ({ children }) => {
   const [showCalendarModal, setShowCalendarModal] = useState(false);
   const [showNotificationsModal, setShowNotificationsModal] = useState(false);
 
+  // AI Nexus State - Persistent across tab switches
+  const [sessions, setSessions] = useState([
+    { id: '1', title: 'Financial Planning', messages: [
+      { role: 'assistant', content: "Hello! I'm your Nexus AI. I have access to your bill data. Ask me anything about your spending, upcoming dues, or total monthly costs!" }
+    ]}
+  ]);
+  const [activeSessionId, setActiveSessionId] = useState('1');
+
   const [bills, setBills] = useState([
     { id: 1, title: 'Electricity Bill', amount: 85.50, dueDate: '2026-05-15', category: 'Electricity', status: 'unpaid', recurring: true },
     { id: 2, title: 'Fiber Internet', amount: 60.00, dueDate: '2026-05-10', category: 'Internet', status: 'unpaid', recurring: true },
@@ -54,7 +62,11 @@ export const BillProvider = ({ children }) => {
       showCalendarModal,
       setShowCalendarModal,
       showNotificationsModal,
-      setShowNotificationsModal
+      setShowNotificationsModal,
+      sessions,
+      setSessions,
+      activeSessionId,
+      setActiveSessionId
     }}>
       {children}
     </BillContext.Provider>
