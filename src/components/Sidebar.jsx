@@ -127,9 +127,14 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
           background: 'var(--border-bright)',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          overflow: 'hidden'
         }}>
-          <span style={{ fontSize: '14px', fontWeight: '700' }}>{user?.avatar || 'JD'}</span>
+          {user?.picture ? (
+            <img src={user.picture} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          ) : (
+            <span style={{ fontSize: '14px', fontWeight: '700' }}>{user?.avatar || 'JD'}</span>
+          )}
         </div>
         <div>
           <p style={{ fontSize: '14px', fontWeight: '600' }}>{user?.name || 'John Doe'}</p>

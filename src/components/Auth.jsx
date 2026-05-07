@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useBills } from '../context/BillContext';
 import { Mail, Lock, User, ArrowRight, Github, Chrome, ShieldCheck } from 'lucide-react';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 
 const Auth = () => {
   const { login, signup } = useBills();
@@ -12,6 +14,25 @@ const Auth = () => {
     password: ''
   });
 
+  const handleGoogleSuccess = (credentialResponse) => {
+    setIsLoading(true);
+    try {
+      const decoded = jwtDecode(credentialResponse.credential);
+      const userData = {
+        name: decoded.name,
+        email: decoded.email,
+        avatar: decoded.picture ? null : decoded.name.charAt(0),
+        picture: decoded.picture,
+        plan: 'Premium Pro'
+      };
+      login(userData);
+    } catch (error) {
+      console.error("Google Login Error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -21,7 +42,7 @@ const Auth = () => {
       const userData = {
         name: isLogin ? 'John Doe' : formData.name,
         email: formData.email,
-        avatar: 'JD',
+        avatar: isLogin ? 'JD' : formData.name.charAt(0),
         plan: 'Premium Pro'
       };
       
@@ -194,12 +215,20 @@ const Auth = () => {
           <div style={{ flex: 1, height: '1px', background: 'var(--border)' }}></div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-          <button style={{ padding: '12px', borderRadius: '12px', border: '1px solid var(--border)', background: 'transparent', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', cursor: 'pointer', transition: 'var(--transition)' }}>
-            <Github size={18} /> Github
-          </button>
-          <button style={{ padding: '12px', borderRadius: '12px', border: '1px solid var(--border)', background: 'transparent', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', cursor: 'pointer', transition: 'var(--transition)' }}>
-            <Chrome size={18} /> Google
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => {
+              console.log('Login Failed');
+            }}
+            useOneTap
+            theme="filled_black"
+            shape="pill"
+            width="100%"
+          />
+          
+          <button style={{ padding: '12px', borderRadius: '30px', border: '1px solid var(--border)', background: 'transparent', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', cursor: 'pointer', transition: 'var(--transition)', width: '100%' }}>
+            <Github size={18} /> Continue with Github
           </button>
         </div>
 
