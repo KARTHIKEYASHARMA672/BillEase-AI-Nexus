@@ -1,16 +1,43 @@
-# React + Vite
+# 💎 BillEase AI - Intelligent Financial Management
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+BillEase is a premium, AI-powered financial platform designed for modern bill tracking and expense management. Built with **React**, **Vite**, and **Google Gemini 2.5 Flash**, it provides deep insights into your spending habits through a state-of-the-art interactive dashboard.
 
-Currently, two official plugins are available:
+## ✨ Core Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **🧠 Nexus AI Assistant**: Integrated with Gemini 2.5 Flash. Nexus understands your specific bill data, analyzes paid vs. unpaid status, and provides real-time financial advice.
+- **📊 Premium Analytics**: Interactive charts (Recharts) that track your financial velocity and project future liabilities.
+- **📅 Visual Calendar**: A specialized modal for mapping payment due dates across the month.
+- **📑 Intelligent Reports**: Generate and download comprehensive financial summaries in one click.
+- **🔔 Notification Center**: Real-time alerts for upcoming dues and payment confirmations.
+- **⚙️ Advanced Settings**: Deep account management including security, profile, and subscription controls.
 
-## React Compiler
+## 🛠️ Technology Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend**: React 18, Vite
+- **Styling**: Vanilla CSS (Custom Glassmorphism Design System)
+- **AI Engine**: Google Generative AI (Gemini 2.5 Flash)
+- **Icons**: Lucide React
+- **Charts**: Recharts
 
-## Expanding the ESLint configuration
+## 🚀 Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/KARTHIKEYASHARMA672/BillEase-AI-Nexus.git
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure API Key**
+   - Add your Gemini API Key in `src/components/AINexus.jsx` (or move to `.env`).
+
+4. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+---
+Built with ❤️ by [KARTHIKEYASHARMA672](https://github.com/KARTHIKEYASHARMA672)
