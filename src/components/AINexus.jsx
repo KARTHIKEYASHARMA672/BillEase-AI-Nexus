@@ -3,7 +3,7 @@ import { Send, Bot, User, Plus, Trash2, History, Sparkles, Loader2, RefreshCw } 
 import { useBills } from '../context/BillContext';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const GEMINI_API_KEY = "AIzaSyAUHLG9D2mAki7PU_0iHtq0y4GfgjYZaZg";
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
 const AINexus = () => {

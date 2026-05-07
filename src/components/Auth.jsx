@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 import { useBills } from '../context/BillContext';
-import { Mail, Lock, User, ArrowRight, Github, Chrome, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, Shield } from 'lucide-react';
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 
 const Auth = () => {
-  const { login, signup } = useBills();
+  const billsContext = useBills();
+  
+  if (!billsContext) {
+    return <div style={{ color: 'white', padding: '20px' }}>Error: BillContext not found. Please ensure Auth is wrapped in BillProvider.</div>;
+  }
+  
+  const { login, signup } = billsContext;
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -35,6 +42,7 @@ const Auth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError(null);
     setIsLoading(true);
     
     // Simulate API call
@@ -109,7 +117,7 @@ const Auth = () => {
             justifyContent: 'center',
             boxShadow: 'var(--shadow-neon)'
           }}>
-            <ShieldCheck size={32} color="white" />
+            <Shield size={32} color="white" />
           </div>
           <h2 style={{ fontSize: '32px', fontWeight: '900', marginBottom: '8px', letterSpacing: '-1px' }}>
             {isLogin ? 'Welcome Back' : 'Join BillEase'}
@@ -216,25 +224,41 @@ const Auth = () => {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={() => {
-              console.log('Login Failed');
-            }}
-            useOneTap
-            theme="filled_black"
-            shape="pill"
-            width="100%"
-          />
-          
-          <button style={{ padding: '12px', borderRadius: '30px', border: '1px solid var(--border)', background: 'transparent', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', cursor: 'pointer', transition: 'var(--transition)', width: '100%' }}>
-            <Github size={18} /> Continue with Github
-          </button>
+          {/* Main Google Login */}
+          <div style={{ minHeight: '40px' }}>
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() => {
+                console.log('Login Failed');
+                setError('Google authentication failed. Please try again or use email.');
+              }}
+              useOneTap
+              theme="filled_black"
+              shape="pill"
+              width="344"
+            />
+          </div>
         </div>
+
+        {error && (
+          <div style={{ 
+            marginTop: '20px', 
+            padding: '12px', 
+            background: 'rgba(244, 63, 94, 0.1)', 
+            border: '1px solid rgba(244, 63, 94, 0.2)', 
+            borderRadius: '10px', 
+            color: '#f43f5e', 
+            fontSize: '13px',
+            textAlign: 'center'
+          }}>
+            {error}
+          </div>
+        )}
 
         <p style={{ textAlign: 'center', marginTop: '32px', color: 'var(--text-dim)', fontSize: '14px' }}>
           {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
           <button 
+            type="button"
             onClick={() => setIsLogin(!isLogin)}
             style={{ background: 'transparent', border: 'none', color: 'var(--primary)', fontWeight: '800', cursor: 'pointer', padding: '0 4px' }}
           >
